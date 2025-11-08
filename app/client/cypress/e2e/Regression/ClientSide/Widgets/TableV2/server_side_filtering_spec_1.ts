@@ -29,9 +29,6 @@ describe(
      * 5. Bind it as a WHERE condition inside an SQL query
      */
     before(() => {
-      featureFlagIntercept({
-        release_table_serverside_filtering_enabled: true,
-      });
       entityExplorer.DragDropWidgetNVerify(draggableWidgets.TABLE, 300, 300);
 
       // turn on filtering for the table - it is disabled by default in this PR(#34593)
@@ -133,9 +130,6 @@ describe(
   { tags: ["@tag.Widget", "@tag.Table"] },
   () => {
     before(() => {
-      featureFlagIntercept({
-        release_table_serverside_filtering_enabled: false,
-      });
       entityExplorer.DragDropWidgetNVerify(draggableWidgets.TABLE, 700, 300);
     });
 
