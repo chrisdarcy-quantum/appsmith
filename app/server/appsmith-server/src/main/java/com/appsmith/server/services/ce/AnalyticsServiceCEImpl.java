@@ -325,25 +325,7 @@ public class AnalyticsServiceCEImpl implements AnalyticsServiceCE {
 
         Mono<User> userMono = sessionUserService.getCurrentUser().switchIfEmpty(Mono.just(anonymousUser));
 
-        return userMono.flatMap(user -> {
-                    // if the user is anonymous, check if the feature flag
-                    // configure_block_event_tracking_for_anonymous_users is enabled.  If yes, then do not send the
-                    // analytics event.
-                    if (user.isAnonymous()) {
-                        return featureFlagService
-                                .check(FeatureFlagEnum.configure_block_event_tracking_for_anonymous_users)
-                                .flatMap(isDisabled -> {
-                                    if (isDisabled) {
-                                        log.debug("Analytics event {} is not sent for anonymous user", eventTag);
-                                        return Mono.empty();
-                                    } else {
-                                        return Mono.just(user);
-                                    }
-                                });
-                    }
-
-                    return Mono.just(user);
-                })
+        return userMono.flatMap(user -> Mono.just(user))
                 .flatMap(user -> Mono.zip(
                         user.isAnonymous()
                                 ? ExchangeUtils.getAnonymousUserIdFromCurrentRequest()

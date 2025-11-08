@@ -155,7 +155,6 @@ function* getSessionRecordingConfig() {
 function shouldTrackUser(
   currentUser: User,
   licenseActive: boolean,
-  featureFlag: boolean,
 ): boolean {
   try {
     const isAnonymous =
@@ -167,7 +166,7 @@ function shouldTrackUser(
 
     const telemetryOn = currentUser?.enableTelemetry ?? false;
 
-    return isAnonymous && (licenseActive || (telemetryOn && !featureFlag));
+    return isAnonymous && (licenseActive || telemetryOn);
   } catch (error) {
     return true;
   }
@@ -185,13 +184,11 @@ function* initTrackers(currentUser: User): SagaIterator {
       getSessionRecordingConfig,
     );
 
-    const featureFlags: FeatureFlags = yield select(selectFeatureFlags);
     const organizationConfig = yield select(getOrganizationConfig);
 
     const shouldTrack = shouldTrackUser(
       currentUser,
       organizationConfig.license.active,
-      featureFlags.configure_block_event_tracking_for_anonymous_users,
     );
 
     yield call(
