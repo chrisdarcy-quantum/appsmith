@@ -11,7 +11,6 @@ describe(
   { tags: ["@tag.Settings"] },
   () => {
     it("1. TC# 2439 Verify 'Page title' changes upon changing Instance name", () => {
-      featureFlagIntercept({ license_branding_enabled: true });
       adminSettings.NavigateToAdminSettings();
       agHelper.GetNClick(AdminsSettings.instanceSettingsTab);
       agHelper.WaitUntilEleAppear(adminSettings._instanceName);
@@ -20,21 +19,8 @@ describe(
       agHelper.GetNClick(AdminsSettings.saveButton, 0, true);
       agHelper.ValidateToastMessage("Successfully saved");
       if (CURRENT_REPO === REPO.CE) cy.title().should("eq", "Appsmith");
-      //verifying that Instance name is not changed in CE
       else if (CURRENT_REPO === REPO.EE)
-        cy.title().should("eq", "Testing Instance name"); //verifying that Instance name is changed in EE
-    });
-    it("2. TC# 2439 Verify 'Page title' does not change upon changing Instance name in free plan", () => {
-      featureFlagIntercept({ license_branding_enabled: false });
-      adminSettings.NavigateToAdminSettings();
-      agHelper.GetNClick(AdminsSettings.instanceSettingsTab);
-      agHelper.ClearNType(
-        adminSettings._instanceName,
-        "Testing Instance name 2",
-      );
-      agHelper.GetNClick(AdminsSettings.saveButton, 0, true);
-      agHelper.ValidateToastMessage("Successfully saved");
-      cy.title().should("eq", "Appsmith");
+        cy.title().should("eq", "Testing Instance name");
     });
   },
 );

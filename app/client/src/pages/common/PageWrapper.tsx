@@ -6,8 +6,6 @@ import {
   getPageTitle,
   getHTMLPageTitle,
 } from "ee/utils/BusinessFeatures/brandingPageHelpers";
-import { useFeatureFlag } from "utils/hooks/useFeatureFlag";
-import { FEATURE_FLAG } from "ee/entities/FeatureFlag";
 import { getOrganizationConfig } from "ee/selectors/organizationSelectors";
 import { useSelector } from "react-redux";
 
@@ -62,20 +60,17 @@ export interface PageWrapperProps {
 
 export function PageWrapper(props: PageWrapperProps) {
   const { isFixed = false, isSavable = false } = props;
-  const isBrandingEnabled = useFeatureFlag(
-    FEATURE_FLAG?.license_branding_enabled,
-  );
   const organizationConfig = useSelector(getOrganizationConfig);
   const { instanceName } = organizationConfig;
 
   const titleSuffix = useMemo(
-    () => getHTMLPageTitle(isBrandingEnabled, instanceName),
-    [isBrandingEnabled, instanceName],
+    () => getHTMLPageTitle(true, instanceName),
+    [instanceName],
   );
 
   const pageTitle = useMemo(
-    () => getPageTitle(isBrandingEnabled, props.displayName, titleSuffix),
-    [isBrandingEnabled, props.displayName, titleSuffix],
+    () => getPageTitle(true, props.displayName, titleSuffix),
+    [props.displayName, titleSuffix],
   );
 
   return (
