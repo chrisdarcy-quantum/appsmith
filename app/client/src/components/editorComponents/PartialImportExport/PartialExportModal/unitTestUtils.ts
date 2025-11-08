@@ -12832,7 +12832,6 @@ export const defaultAppState = {
           release_datasource_environments_enabled: false,
           release_appnavigationlogoupload_enabled: false,
           release_embed_hide_share_settings_enabled: false,
-          release_table_serverside_filtering_enabled: false,
           license_branding_enabled: false,
           license_sso_saml_enabled: false,
           license_sso_oidc_enabled: false,

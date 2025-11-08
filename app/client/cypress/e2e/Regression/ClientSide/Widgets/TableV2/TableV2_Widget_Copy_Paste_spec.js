@@ -58,9 +58,6 @@ describe(
     });
 
     it("2. Should check that table binding list gets updated when .filters gets added to it", () => {
-      featureFlagIntercept({
-        release_table_serverside_filtering_enabled: true,
-      });
       PageLeftPane.switchSegment(PagePaneSegment.UI);
       entityExplorer.ActionContextMenuByEntityName({
         entityNameinLeftSidebar: "Table1Copy",
