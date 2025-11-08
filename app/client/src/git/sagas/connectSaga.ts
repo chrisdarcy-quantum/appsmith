@@ -7,10 +7,9 @@ import type {
 import { GitErrorCodes } from "../constants/enums";
 import type { GitArtifactPayloadAction } from "../store/types";
 import type { ConnectInitPayload } from "../store/actions/connectActions";
-import { call, put, select } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { validateResponse } from "sagas/ErrorSagas";
 import { gitGlobalActions } from "git/store/gitGlobalSlice";
-import { selectGitApiContractsEnabled } from "git/store/selectors/gitFeatureFlagSelectors";
 import handleApiErrors from "./helpers/handleApiErrors";
 
 export default function* connectSaga(
@@ -26,16 +25,12 @@ export default function* connectSaga(
       gitProfile: action.payload.gitProfile,
     };
 
-    const isGitApiContractsEnabled: boolean = yield select(
-      selectGitApiContractsEnabled,
-    );
-
     response = yield call(
       connectRequest,
       artifactDef.artifactType,
       artifactDef.baseArtifactId,
       params,
-      isGitApiContractsEnabled,
+      true,
     );
 
     const isValidResponse: boolean = yield validateResponse(response, false);

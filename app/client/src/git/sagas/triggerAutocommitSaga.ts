@@ -27,7 +27,6 @@ import {
 } from "redux-saga/effects";
 import type { Task } from "redux-saga";
 import { validateResponse } from "sagas/ErrorSagas";
-import { selectGitApiContractsEnabled } from "git/store/selectors/gitFeatureFlagSelectors";
 import handleApiErrors from "./helpers/handleApiErrors";
 import type { GitArtifactDef } from "git/types";
 
@@ -59,16 +58,13 @@ function* pollAutocommitProgressSaga(params: PollAutocommitProgressParams) {
   const { artifactDef, artifactId } = params;
   let triggerResponse: TriggerAutocommitResponse | undefined;
 
-  const isGitApiContractsEnabled: boolean = yield select(
-    selectGitApiContractsEnabled,
-  );
 
   try {
     triggerResponse = yield call(
       triggerAutocommitRequest,
       artifactDef.artifactType,
       artifactId,
-      isGitApiContractsEnabled,
+      true,
     );
     const isValidResponse: boolean = yield validateResponse(triggerResponse);
 
@@ -102,7 +98,7 @@ function* pollAutocommitProgressSaga(params: PollAutocommitProgressParams) {
           fetchAutocommitProgressRequest,
           artifactDef.artifactType,
           artifactDef.baseArtifactId,
-          isGitApiContractsEnabled,
+          true,
         );
         const isValidResponse: boolean =
           yield validateResponse(progressResponse);

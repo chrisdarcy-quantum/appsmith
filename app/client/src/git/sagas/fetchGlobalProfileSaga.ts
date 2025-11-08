@@ -1,4 +1,4 @@
-import { call, put, select } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import fetchGlobalProfileRequest from "../requests/fetchGlobalProfileRequest";
 import type { FetchGlobalProfileResponse } from "../requests/fetchGlobalProfileRequest.types";
 
@@ -6,17 +6,12 @@ import type { FetchGlobalProfileResponse } from "../requests/fetchGlobalProfileR
 import { validateResponse } from "sagas/ErrorSagas";
 import { gitGlobalActions } from "git/store/gitGlobalSlice";
 import handleApiErrors from "./helpers/handleApiErrors";
-import { selectGitApiContractsEnabled } from "git/store/selectors/gitFeatureFlagSelectors";
 
 export default function* fetchGlobalProfileSaga() {
   let response: FetchGlobalProfileResponse | undefined;
 
   try {
-    const isGitApiContractsEnabled: boolean = yield select(
-      selectGitApiContractsEnabled,
-    );
-
-    response = yield call(fetchGlobalProfileRequest, isGitApiContractsEnabled);
+    response = yield call(fetchGlobalProfileRequest, true);
 
     const isValidResponse: boolean = yield validateResponse(response);
 

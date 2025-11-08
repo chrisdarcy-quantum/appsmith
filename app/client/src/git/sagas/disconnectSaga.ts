@@ -5,7 +5,6 @@ import disconnectRequest from "git/requests/disconnectRequest";
 import type { DisconnectResponse } from "git/requests/disconnectRequest.types";
 import { gitArtifactActions } from "git/store/gitArtifactSlice";
 import { selectDisconnectArtifactDef } from "git/store/selectors/gitArtifactSelectors";
-import { selectGitApiContractsEnabled } from "git/store/selectors/gitFeatureFlagSelectors";
 import type { GitArtifactPayloadAction } from "git/store/types";
 import { call, put, select } from "redux-saga/effects";
 import { validateResponse } from "sagas/ErrorSagas";
@@ -22,15 +21,11 @@ export default function* disconnectSaga(action: GitArtifactPayloadAction) {
   let response: DisconnectResponse | undefined;
 
   try {
-    const isGitApiContractsEnabled: boolean = yield select(
-      selectGitApiContractsEnabled,
-    );
-
     response = yield call(
       disconnectRequest,
       disconnectArtifactDef.artifactType,
       disconnectArtifactDef.baseArtifactId,
-      isGitApiContractsEnabled,
+      true,
     );
     const isValidResponse: boolean = yield validateResponse(response);
 

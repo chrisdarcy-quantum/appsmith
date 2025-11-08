@@ -1,9 +1,8 @@
 import toggleAutocommitRequest from "git/requests/toggleAutocommitRequest";
 import type { ToggleAutocommitResponse } from "git/requests/toggleAutocommitRequest.types";
 import { gitArtifactActions } from "git/store/gitArtifactSlice";
-import { selectGitApiContractsEnabled } from "git/store/selectors/gitFeatureFlagSelectors";
 import type { GitArtifactPayloadAction } from "git/store/types";
-import { call, put, select } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { validateResponse } from "sagas/ErrorSagas";
 import handleApiErrors from "./helpers/handleApiErrors";
 
@@ -14,15 +13,12 @@ export default function* toggleAutocommitSaga(
   let response: ToggleAutocommitResponse | undefined;
 
   try {
-    const isGitApiContractsEnabled: boolean = yield select(
-      selectGitApiContractsEnabled,
-    );
 
     response = yield call(
       toggleAutocommitRequest,
       artifactDef.artifactType,
       artifactDef.baseArtifactId,
-      isGitApiContractsEnabled,
+      true,
     );
     const isValidResponse: boolean = yield validateResponse(response);
 

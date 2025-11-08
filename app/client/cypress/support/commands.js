@@ -785,14 +785,6 @@ Cypress.Commands.add("startServerAndRoutes", () => {
   ) {
     // intercept features call for creating pages that support Anvil + WDS tests
     featureFlagIntercept({ release_anvil_enabled: true }, false);
-  } else if (
-    Cypress.currentTest.titlePath.some((title) =>
-      title.toLowerCase().includes("git"),
-    ) ||
-    (Cypress.currentTest.tags && Cypress.currentTest.tags.includes("@tag.Git"))
-  ) {
-    // intercept features call for Git tests that require release_git_api_contracts_enabled flag
-    featureFlagIntercept({ release_git_api_contracts_enabled: true }, false);
   } else {
     featureFlagIntercept({}, false);
   }

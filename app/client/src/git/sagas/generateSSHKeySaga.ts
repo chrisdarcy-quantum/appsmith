@@ -7,9 +7,8 @@ import type {
 import type { GenerateSSHKeyInitPayload } from "git/store/actions/generateSSHKeyActions";
 import { gitArtifactActions } from "git/store/gitArtifactSlice";
 import { gitGlobalActions } from "git/store/gitGlobalSlice";
-import { selectGitApiContractsEnabled } from "git/store/selectors/gitFeatureFlagSelectors";
 import type { GitArtifactPayloadAction } from "git/store/types";
-import { call, put, select } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { validateResponse } from "sagas/ErrorSagas";
 import handleApiErrors from "./helpers/handleApiErrors";
 
@@ -24,16 +23,13 @@ export function* generateSSHKeySaga(
       keyType: action.payload.keyType,
     };
 
-    const isGitApiContractsEnabled: boolean = yield select(
-      selectGitApiContractsEnabled,
-    );
 
     response = yield call(
       generateSSHKeyRequest,
       artifactDef.artifactType,
       artifactDef.baseArtifactId,
       params,
-      isGitApiContractsEnabled,
+      true,
     );
     const isValidResponse: boolean = yield validateResponse(response);
 

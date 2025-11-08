@@ -13,7 +13,6 @@ import { gitGlobalActions } from "git/store/gitGlobalSlice";
 import type { ApplicationPayload } from "entities/Application";
 import { getCurrentApplication } from "ee/selectors/applicationSelectors";
 import { ReduxActionTypes } from "ee/constants/ReduxActionConstants";
-import { selectGitApiContractsEnabled } from "git/store/selectors/gitFeatureFlagSelectors";
 import handleApiErrors from "./helpers/handleApiErrors";
 
 export default function* commitSaga(
@@ -28,16 +27,13 @@ export default function* commitSaga(
       message: action.payload.message,
       doPush: action.payload.doPush,
     };
-    const isGitApiContractsEnabled: boolean = yield select(
-      selectGitApiContractsEnabled,
-    );
 
     response = yield call(
       commitRequest,
       artifactDef.artifactType,
       artifactId,
       params,
-      isGitApiContractsEnabled,
+      true,
     );
 
     const isValidResponse: boolean = yield validateResponse(response, false);
