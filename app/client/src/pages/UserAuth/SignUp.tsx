@@ -54,8 +54,6 @@ import {
   getThirdPartyAuths,
 } from "ee/selectors/organizationSelectors";
 import Helmet from "react-helmet";
-import { useFeatureFlag } from "utils/hooks/useFeatureFlag";
-import { FEATURE_FLAG } from "ee/entities/FeatureFlag";
 import { getHTMLPageTitle } from "ee/utils/BusinessFeatures/brandingPageHelpers";
 import log from "loglevel";
 import { SELF_HOSTING_DOC } from "constants/ThirdPartyConstants";
@@ -124,12 +122,9 @@ export function SignUp(props: SignUpFormProps) {
   const socialLoginList = useSelector(getThirdPartyAuths);
   const shouldDisableSignupButton = pristine || !isFormValid;
   const location = useLocation();
-  const isBrandingEnabled = useFeatureFlag(
-    FEATURE_FLAG.license_branding_enabled,
-  );
   const organizationConfig = useSelector(getOrganizationConfig);
   const { instanceName } = organizationConfig;
-  const htmlPageTitle = getHTMLPageTitle(isBrandingEnabled, instanceName);
+  const htmlPageTitle = getHTMLPageTitle(true, instanceName);
   const isCloudBillingEnabled = useIsCloudBillingEnabled();
   const isHostnameEqualtoLogin = isLoginHostname();
 

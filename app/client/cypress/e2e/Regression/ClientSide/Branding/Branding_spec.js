@@ -131,8 +131,6 @@ describe("Branding", { tags: ["@tag.Settings"] }, () => {
     }
 
     if (CURRENT_REPO === REPO.EE) {
-      featureFlagIntercept({ license_branding_enabled: true });
-
       cy.wait(2000);
 
       // branding color
@@ -284,32 +282,4 @@ describe("Branding", { tags: ["@tag.Settings"] }, () => {
     }
   });
 
-  it("6. Super user sees upgrade option in branding page in free plan", () => {
-    cy.LogOut(false);
-    cy.LoginFromAPI(Cypress.env("USERNAME"), Cypress.env("PASSWORD"));
-    cy.get(adminSettings._adminSettingsBtn).should("be.visible");
-    cy.get(adminSettings._adminSettingsBtn).click();
-    cy.url().should("contain", adminSettings.routes.GENERAL);
-
-    cy.get(locators.LeftPaneBrandingLink).should("be.visible");
-    cy.get(locators.LeftPaneBrandingLink).click();
-    cy.wait(2000);
-
-    featureFlagIntercept({ license_branding_enabled: false });
-    cy.get(locators.submitButton).should("be.disabled");
-    cy.get(locators.businessTag).should("be.visible");
-    cy.get(locators.upgradeBanner).should("be.visible");
-    cy.get(locators.upgradeBanner)
-      .find("h1")
-      .should("have.text", "Custom Branding for your workspaces");
-    cy.get(locators.upgradeBanner)
-      .find("h2")
-      .should(
-        "have.text",
-        Cypress.env("MESSAGES").ADMIN_BRANDING_SETTINGS_SUBTITLE_UPGRADE(),
-      );
-    cy.get(locators.upgradeButton)
-      .should("be.visible")
-      .should("have.text", "Upgrade");
-  });
 });

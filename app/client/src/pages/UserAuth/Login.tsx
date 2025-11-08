@@ -103,16 +103,13 @@ export function Login(props: LoginFormProps) {
   const isFormLoginEnabled = useSelector(getIsFormLoginEnabled);
   const socialLoginList = useSelector(getThirdPartyAuths);
   const queryParams = new URLSearchParams(location.search);
-  const isBrandingEnabled = useFeatureFlag(
-    FEATURE_FLAG.license_branding_enabled,
-  );
   const isMultiOrgEnabled = useFeatureFlag(
     FEATURE_FLAG.license_multi_org_enabled,
   );
   const organizationConfig = useSelector(getOrganizationConfig);
   const withinOrg = useSelector(isWithinAnOrganization);
   const { displayName, instanceName, slug } = organizationConfig;
-  const htmlPageTitle = getHTMLPageTitle(isBrandingEnabled, instanceName);
+  const htmlPageTitle = getHTMLPageTitle(true, instanceName);
   const invalidCredsForgotPasswordLinkText = createMessage(
     LOGIN_PAGE_INVALID_CREDS_FORGOT_PASSWORD_LINK,
   );
