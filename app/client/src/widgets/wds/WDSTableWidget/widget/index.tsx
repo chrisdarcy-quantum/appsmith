@@ -37,7 +37,6 @@ import type {
   TransientDataPayload,
 } from "../constants";
 import {
-  ALLOW_TABLE_WIDGET_SERVER_SIDE_FILTERING,
   defaultEditableCell,
   ORIGINAL_INDEX_KEY,
   PaginationDirection,
@@ -124,14 +123,6 @@ export class WDSTableWidget extends BaseWidget<TableWidgetProps, WidgetState> {
 
   static getDefaults() {
     const defaultsConfig = config.defaultsConfig;
-
-    // Note: Doing this so that unit tests don't fail. Most likely because of cyclic imports
-    // This is a temporary fix and should be removed once we have a better solution
-    defaultsConfig["enableServerSideFiltering"] = WDSTableWidget.getFeatureFlag(
-      ALLOW_TABLE_WIDGET_SERVER_SIDE_FILTERING,
-    )
-      ? false
-      : undefined;
 
     return defaultsConfig;
   }
