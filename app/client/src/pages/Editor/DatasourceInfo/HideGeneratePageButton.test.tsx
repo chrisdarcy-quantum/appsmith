@@ -90,7 +90,7 @@ const getCreateButtonText = (pluginType: PluginType) => {
 };
 
 describe("DatasourceViewModeSchema Component", () => {
-  it("1. should not render the 'generate page' button when release_drag_drop_building_blocks_enabled is enabled", () => {
+  it("1. should not render the 'generate page' button when building blocks feature is enabled", () => {
     (useFeatureFlag as jest.Mock).mockReturnValue(true);
     (useParams as jest.Mock).mockReturnValue({
       pageId: unitTestBaseMockStore.entities.pageList.currentPageId,
@@ -112,7 +112,7 @@ describe("DatasourceViewModeSchema Component", () => {
     expect(generatePageButton).not.toBeInTheDocument();
   });
 
-  it("2. should render new query button as primary when release_drag_drop_building_blocks_enabled is enabled", () => {
+  it("2. should render new query button as primary when building blocks feature is enabled", () => {
     (useFeatureFlag as jest.Mock).mockReturnValue(true);
     const mockHistoryPush = jest.fn();
     const mockHistoryReplace = jest.fn();
@@ -143,7 +143,7 @@ describe("DatasourceViewModeSchema Component", () => {
 });
 
 describe("GoogleSheetSchema Component", () => {
-  it("1. should not render the 'generate page' button when release_drag_drop_building_blocks_enabled is enabled", () => {
+  it("1. should not render the 'generate page' button when building blocks feature is enabled", () => {
     (useFeatureFlag as jest.Mock).mockReturnValue(true);
     (useParams as jest.Mock).mockReturnValue({
       pageId: unitTestBaseMockStore.entities.pageList.currentPageId,
@@ -167,7 +167,7 @@ describe("GoogleSheetSchema Component", () => {
 });
 
 describe("DSFormHeader Component", () => {
-  it("1. should not render the 'generate page' button when release_drag_drop_building_blocks_enabled is enabled", () => {
+  it("1. should not render the 'generate page' button when building blocks feature is enabled", () => {
     (useFeatureFlag as jest.Mock).mockReturnValue(true);
     const mockHistoryPush = jest.fn();
     const mockHistoryReplace = jest.fn();
