@@ -7,8 +7,6 @@ export const FEATURE_FLAG = {
     "release_appnavigationlogoupload_enabled",
   release_embed_hide_share_settings_enabled:
     "release_embed_hide_share_settings_enabled",
-  release_table_serverside_filtering_enabled:
-    "release_table_serverside_filtering_enabled",
   license_branding_enabled: "license_branding_enabled",
   license_sso_saml_enabled: "license_sso_saml_enabled",
   license_sso_oidc_enabled: "license_sso_oidc_enabled",
@@ -77,7 +75,6 @@ export const DEFAULT_FEATURE_FLAG_VALUE: FeatureFlags = {
   release_datasource_environments_enabled: false,
   release_appnavigationlogoupload_enabled: false,
   release_embed_hide_share_settings_enabled: false,
-  release_table_serverside_filtering_enabled: false,
   license_branding_enabled: false,
   license_sso_saml_enabled: false,
   license_sso_oidc_enabled: false,
