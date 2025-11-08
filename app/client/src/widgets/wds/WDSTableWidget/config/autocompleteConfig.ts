@@ -3,12 +3,10 @@ import {
   type ExtraDef,
 } from "utils/autocomplete/defCreatorUtils";
 import {
-  ALLOW_TABLE_WIDGET_SERVER_SIDE_FILTERING,
   type TableWidgetProps,
 } from "../constants";
 import type { AutocompletionDefinitions } from "WidgetProvider/types";
 import { DefaultAutocompleteDefinitions } from "widgets/WidgetUtils";
-import { WDSTableWidget } from "../widget";
 
 export const autocompleteConfig = (() => {
   return (widget: TableWidgetProps, extraDefsToDefine?: ExtraDef) => {
@@ -41,13 +39,8 @@ export const autocompleteConfig = (() => {
       isAddRowInProgress: "bool",
       previousPageVisited: generateTypeDef(widget.previousPageVisited),
       nextPageVisited: generateTypeDef(widget.nextPageButtonClicked),
+      filters: generateTypeDef(widget.filters),
     };
-
-    if (
-      WDSTableWidget.getFeatureFlag(ALLOW_TABLE_WIDGET_SERVER_SIDE_FILTERING)
-    ) {
-      config["filters"] = generateTypeDef(widget.filters);
-    }
 
     return config;
   };

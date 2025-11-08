@@ -29,9 +29,6 @@ describe(
      * 5. Bind it as a WHERE condition inside an SQL query
      */
     before(() => {
-      featureFlagIntercept({
-        release_table_serverside_filtering_enabled: true,
-      });
       entityExplorer.DragDropWidgetNVerify(draggableWidgets.TABLE, 300, 300);
 
       // turn on filtering for the table - it is disabled by default in this PR(#34593)
@@ -129,24 +126,21 @@ describe(
 );
 
 describe(
-  "Table v2: Server side filtering hidden behind feature flag",
+  "Table v2: Server side filtering is always visible",
   { tags: ["@tag.Widget", "@tag.Table"] },
   () => {
     before(() => {
-      featureFlagIntercept({
-        release_table_serverside_filtering_enabled: false,
-      });
       entityExplorer.DragDropWidgetNVerify(draggableWidgets.TABLE, 700, 300);
     });
 
-    it("1. should test that server side filtering option and dtable.filters autocomplete should not be visible", () => {
-      agHelper.AssertElementAbsence(
+    it("1. should test that server side filtering option and table.filters autocomplete are visible", () => {
+      agHelper.AssertElementExist(
         propPane._propertyControl("serversidefiltering"),
       );
       entityExplorer.DragDropWidgetNVerify(draggableWidgets.TEXT, 300, 700);
       EditorNavigation.SelectEntityByName("Text1", EntityType.Widget);
       propPane.TypeTextIntoField("Text", "{{Table1.filters");
-      agHelper.AssertElementAbsence(locators._hints);
+      agHelper.AssertElementExist(locators._hints);
     });
   },
 );
