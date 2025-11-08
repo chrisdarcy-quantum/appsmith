@@ -13,7 +13,6 @@ import {
 } from "widgets/TableWidgetV2/constants";
 import { composePropertyUpdateHook } from "widgets/WidgetUtils";
 import {
-  ALLOW_TABLE_WIDGET_SERVER_SIDE_FILTERING,
   CUSTOM_SORT_FUNCTION_ENABLED,
 } from "../../constants";
 import Widget from "../index";
@@ -285,8 +284,7 @@ export default [
         isBindProperty: false,
         isTriggerProperty: false,
         defaultValue: false,
-        hidden: () =>
-          !Widget.getFeatureFlag(ALLOW_TABLE_WIDGET_SERVER_SIDE_FILTERING),
+        hidden: () => true,
       },
       {
         propertyName: "onTableFilterUpdate",
