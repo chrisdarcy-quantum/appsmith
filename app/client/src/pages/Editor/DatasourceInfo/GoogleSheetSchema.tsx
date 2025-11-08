@@ -357,9 +357,6 @@ function GoogleSheetSchema(props: Props) {
   );
 
   const isFeatureEnabled = useFeatureFlag(FEATURE_FLAG.license_gac_enabled);
-  const releaseDragDropBuildingBlocks = useFeatureFlag(
-    FEATURE_FLAG.release_drag_drop_building_blocks_enabled,
-  );
 
   const ideType = getIDETypeByUrl(history.location.pathname);
 
@@ -385,7 +382,6 @@ function GoogleSheetSchema(props: Props) {
   );
 
   const showGeneratePageBtn =
-    !releaseDragDropBuildingBlocks &&
     !isLoading &&
     !isError &&
     sheetData?.length &&

@@ -204,9 +204,7 @@ const baseStoreForSpec = {
     },
     users: {
       featureFlag: {
-        data: {
-          release_drag_drop_building_blocks_enabled: false,
-        },
+        data: {},
       },
     },
   },
@@ -234,9 +232,7 @@ const storeToUseWithDragDropBuildingBlocksEnabled = {
       ...baseStoreForSpec.ui.users,
       featureFlag: {
         ...baseStoreForSpec.ui.users.featureFlag,
-        data: {
-          release_drag_drop_building_blocks_enabled: true,
-        },
+        data: {},
       },
     },
   },
@@ -250,9 +246,7 @@ const storeToUseWithStarterBuildingBlocksEnabled = {
       ...baseStoreForSpec.ui.users,
       featureFlag: {
         ...baseStoreForSpec.ui.users.featureFlag,
-        data: {
-          release_drag_drop_building_blocks_enabled: false,
-        },
+        data: {},
       },
     },
   },
