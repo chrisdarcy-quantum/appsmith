@@ -31,9 +31,7 @@ const createInitialState = (overrideFn = (o: any) => o) => {
       },
       users: {
         featureFlag: {
-          data: {
-            license_git_continuous_delivery_enabled: true,
-          },
+          data: {},
         },
       },
     },

@@ -19,8 +19,6 @@ export const FEATURE_FLAG = {
   license_ai_agent_enabled: "license_ai_agent_enabled",
   license_git_branch_protection_enabled:
     "license_git_branch_protection_enabled",
-  license_git_continuous_delivery_enabled:
-    "license_git_continuous_delivery_enabled",
   license_widget_rtl_support_enabled: "license_widget_rtl_support_enabled",
   ab_one_click_learning_popover_enabled:
     "ab_one_click_learning_popover_enabled",
@@ -84,7 +82,6 @@ export const DEFAULT_FEATURE_FLAG_VALUE: FeatureFlags = {
   license_ai_agent_enabled: false,
   release_drag_drop_building_blocks_enabled: false,
   license_git_branch_protection_enabled: false,
-  license_git_continuous_delivery_enabled: false,
   license_widget_rtl_support_enabled: false,
   ab_one_click_learning_popover_enabled: false,
   ab_appsmith_ai_query: false,
