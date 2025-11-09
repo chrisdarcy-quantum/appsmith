@@ -12,7 +12,6 @@ public enum FeatureFlagEnum {
     // ------------------- These are actual feature flags meant to be used across the product ----------------------- //
     release_datasource_environments_enabled,
     APP_NAVIGATION_LOGO_UPLOAD,
-    release_embed_hide_share_settings_enabled,
     rollout_datasource_test_rate_limit_enabled,
     release_gs_all_sheets_options_enabled,
     /**

@@ -9,7 +9,6 @@ import debounce from "lodash/debounce";
 import { updateApplication } from "ee/actions/applicationActions";
 import { viewerURL } from "ee/RouteBuilder";
 import { createMessage, IN_APP_EMBED_SETTING } from "ee/constants/messages";
-import { selectFeatureFlags } from "ee/selectors/featureFlagsSelectors";
 import { AppsmithFrameAncestorsSetting } from "./Constants/constants";
 import { formatEmbedSettings } from "./Utils/utils";
 
@@ -41,7 +40,6 @@ function useUpdateEmbedSnippet() {
   const settings = useSelector(getSettings);
   const user = useSelector(getCurrentUser);
   const defaultBasePageId = useSelector(getDefaultBasePageId);
-  const featureFlags = useSelector(selectFeatureFlags);
   const currentSetting: EmbedSetting = formatEmbedSettings(
     settings["APPSMITH_ALLOWED_FRAME_ANCESTORS"] as string,
   ).value;
@@ -108,18 +106,7 @@ function useUpdateEmbedSnippet() {
     const url = viewerURL({
       basePageId: defaultBasePageId,
     });
-    const allowHidingShareSettingsInEmbedView =
-      featureFlags.release_embed_hide_share_settings_enabled;
     const fullUrl = new URL(window.location.origin.toString() + url);
-
-    if (embedSetting?.showNavigationBar) {
-      if (allowHidingShareSettingsInEmbedView) {
-        fullUrl.searchParams.append("embed", "true");
-        fullUrl.searchParams.append("navbar", "true");
-      }
-
-      return fullUrl.toString();
-    }
 
     fullUrl.searchParams.append("embed", "true");
 
