@@ -13,7 +13,6 @@ import { useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import useArtifactSelector from "./useArtifactSelector";
 import refToBranchList from "git/helpers/refToBranchList";
-import useGitFeatureFlags from "./useGitFeatureFlags";
 import type { GitBranch } from "git/types";
 
 export default function useBranches() {
@@ -24,20 +23,14 @@ export default function useBranches() {
 
   // fetch branches
   const branchesState = useArtifactSelector(selectFetchBranchesState);
-  const { release_git_api_contracts_enabled: isGitApiContractsEnabled } =
-    useGitFeatureFlags();
 
   const branches = useMemo(() => {
     if (!Array.isArray(branchesState?.value)) {
       return null;
     }
 
-    if (!isGitApiContractsEnabled) {
-      return branchesState.value;
-    }
-
     return refToBranchList(branchesState.value);
-  }, [branchesState?.value, isGitApiContractsEnabled]);
+  }, [branchesState?.value]);
 
   const fetchBranches = useCallback(() => {
     if (artifactDef && artifactId) {

@@ -1,8 +1,7 @@
-import { call, put, select } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import type { CheckoutBranchInitPayload } from "../store/actions/checkoutBranchActions";
 import { gitArtifactActions } from "../store/gitArtifactSlice";
 import type { GitArtifactPayloadAction } from "../store/types";
-import { selectGitApiContractsEnabled } from "git/store/selectors/gitFeatureFlagSelectors";
 import type {
   CheckoutRefRequestParams,
   CheckoutRefResponse,
@@ -22,16 +21,13 @@ export default function* checkoutBranchSaga(
       refType: "branch",
       refName: branchName,
     };
-    const isGitApiContractsEnabled: boolean = yield select(
-      selectGitApiContractsEnabled,
-    );
 
     response = yield call(
       checkoutRefRequest,
       artifactDef.artifactType,
       artifactId,
       params,
-      isGitApiContractsEnabled,
+      true,
     );
     const isValidResponse: boolean = yield validateResponse(response);
 

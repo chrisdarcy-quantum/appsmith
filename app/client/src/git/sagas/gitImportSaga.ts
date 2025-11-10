@@ -1,4 +1,4 @@
-import { call, put, select } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { validateResponse } from "sagas/ErrorSagas";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import gitImportRequest from "git/requests/gitImportRequest";
@@ -10,7 +10,6 @@ import type { GitImportInitPayload } from "git/store/actions/gitImportActions";
 import { gitGlobalActions } from "git/store/gitGlobalSlice";
 import { getWorkspaceIdForImport } from "ee/selectors/applicationSelectors";
 import { GitErrorCodes } from "git/constants/enums";
-import { selectGitApiContractsEnabled } from "git/store/selectors/gitFeatureFlagSelectors";
 import handleApiErrors from "./helpers/handleApiErrors";
 import type { GitApiError } from "git/store/types";
 
@@ -23,15 +22,12 @@ export default function* gitImportSaga(
   let response: GitImportResponse | undefined;
 
   try {
-    const isGitApiContractsEnabled: boolean = yield select(
-      selectGitApiContractsEnabled,
-    );
 
     response = yield call(
       gitImportRequest,
       workspaceId,
       params,
-      isGitApiContractsEnabled,
+      true,
     );
     const isValidResponse: boolean = yield validateResponse(response);
 

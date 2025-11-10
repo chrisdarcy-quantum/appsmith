@@ -1,11 +1,10 @@
 import type { DeleteBranchInitPayload } from "../store/actions/deleteBranchActions";
 import { gitArtifactActions } from "../store/gitArtifactSlice";
 import type { GitArtifactPayloadAction } from "../store/types";
-import { call, put, select } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { validateResponse } from "sagas/ErrorSagas";
 import { toast } from "@appsmith/ads";
 import { createMessage, DELETE_BRANCH_SUCCESS } from "ee/constants/messages";
-import { selectGitApiContractsEnabled } from "git/store/selectors/gitFeatureFlagSelectors";
 import deleteRefRequest from "git/requests/deleteRefRequest";
 import type {
   DeleteRefRequestParams,
@@ -25,16 +24,12 @@ export default function* deleteBranchSaga(
       refName: action.payload.branchName,
     };
 
-    const isGitApiContractsEnabled: boolean = yield select(
-      selectGitApiContractsEnabled,
-    );
-
     response = yield call(
       deleteRefRequest,
       artifactDef.artifactType,
       artifactDef.baseArtifactId,
       params,
-      isGitApiContractsEnabled,
+      true,
     );
     const isValidResponse: boolean = yield validateResponse(response);
 

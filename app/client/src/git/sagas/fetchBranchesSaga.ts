@@ -1,10 +1,9 @@
 import type { FetchBranchesInitPayload } from "../store/actions/fetchBranchesActions";
 import { gitArtifactActions } from "git/store/gitArtifactSlice";
 import type { GitArtifactPayloadAction } from "../store/types";
-import { call, put, select } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { validateResponse } from "sagas/ErrorSagas";
 import fetchRefsRequest from "git/requests/fetchRefsRequest";
-import { selectGitApiContractsEnabled } from "git/store/selectors/gitFeatureFlagSelectors";
 import type {
   FetchRefsRequestParams,
   FetchRefsResponse,
@@ -23,16 +22,12 @@ export default function* fetchBranchesSaga(
       pruneRefs: action.payload.pruneBranches ?? true,
     };
 
-    const isGitApiContractsEnabled: boolean = yield select(
-      selectGitApiContractsEnabled,
-    );
-
     response = yield call(
       fetchRefsRequest,
       artifactDef.artifactType,
       artifactId,
       params,
-      isGitApiContractsEnabled,
+      true,
     );
     const isValidResponse: boolean = yield validateResponse(response, false);
 

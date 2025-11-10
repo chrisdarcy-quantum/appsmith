@@ -1,4 +1,4 @@
-import { call, put, select } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import type { CreateBranchInitPayload } from "../store/actions/createBranchActions";
 import { gitArtifactActions } from "../store/gitArtifactSlice";
 import type { GitArtifactPayloadAction } from "../store/types";
@@ -10,7 +10,6 @@ import type {
   CreateRefRequestParams,
   CreateRefResponse,
 } from "git/requests/createRefRequest.types";
-import { selectGitApiContractsEnabled } from "git/store/selectors/gitFeatureFlagSelectors";
 import handleApiErrors from "./helpers/handleApiErrors";
 
 export default function* createBranchSaga(
@@ -25,16 +24,12 @@ export default function* createBranchSaga(
       refName: action.payload.branchName,
     };
 
-    const isGitApiContractsEnabled: boolean = yield select(
-      selectGitApiContractsEnabled,
-    );
-
     response = yield call(
       createRefRequest,
       artifactDef.artifactType,
       artifactId,
       params,
-      isGitApiContractsEnabled,
+      true,
     );
     const isValidResponse: boolean = yield validateResponse(response);
 

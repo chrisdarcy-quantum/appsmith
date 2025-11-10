@@ -6,9 +6,8 @@ import type {
 } from "git/requests/updateLocalProfileRequest.types";
 import { gitArtifactActions } from "../store/gitArtifactSlice";
 import type { GitArtifactPayloadAction } from "../store/types";
-import { call, put, select } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { validateResponse } from "sagas/ErrorSagas";
-import { selectGitApiContractsEnabled } from "git/store/selectors/gitFeatureFlagSelectors";
 import handleApiErrors from "./helpers/handleApiErrors";
 
 export default function* updateLocalProfileSaga(
@@ -24,16 +23,13 @@ export default function* updateLocalProfileSaga(
       useGlobalProfile: action.payload.useGlobalProfile,
     };
 
-    const isGitApiContractsEnabled: boolean = yield select(
-      selectGitApiContractsEnabled,
-    );
 
     response = yield call(
       updateLocalProfileRequest,
       artifactDef.artifactType,
       artifactDef.baseArtifactId,
       params,
-      isGitApiContractsEnabled,
+      true,
     );
 
     const isValidResponse: boolean = yield validateResponse(response);
